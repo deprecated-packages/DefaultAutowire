@@ -1,0 +1,9 @@
+parameters:
+    kernel.secret: 123
+
+
+services:
+    some_service:
+        class: Symplify\DefaultAutowire\Tests\Source\SomeService
+    some_autowired_service:
+        class: Symplify\DefaultAutowire\Tests\Source\SomeAutowiredService
