@@ -9,7 +9,7 @@
 Using autowire feature can be demanding more then needed. Since you have to turn it manually, you have to think about many different situation.
 
 ```yaml
-// app/config/config.yml
+# app/config/config.yml
 services:
     some_service:
         class: SomeClass
