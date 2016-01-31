@@ -3,7 +3,6 @@
 namespace Symplify\DefaultAutowire\Tests;
 
 use PHPUnit_Framework_TestCase;
-use Symfony\Component\HttpKernel\Tests\Controller;
 use Symplify\DefaultAutowire\Tests\Source\SomeAutowiredService;
 use Symplify\DefaultAutowire\Tests\Source\SomeService;
 

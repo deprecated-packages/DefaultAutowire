@@ -48,7 +48,7 @@ final class TurnOnAutowireCompilerPass implements CompilerPassInterface
             return false;
         }
 
-       return true;
+        return true;
     }
 
     private function isDefinitionValid(Definition $definition) : bool
