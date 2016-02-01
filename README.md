@@ -6,7 +6,7 @@
 [![Downloads](https://img.shields.io/packagist/dt/symplify/default-autowire.svg?style=flat-square)](https://packagist.org/packages/symplify/default-autowire)
 [![Latest stable](https://img.shields.io/packagist/v/symplify/default-autowire.svg?style=flat-square)](https://packagist.org/packages/symplify/default-autowire)
 
-Using autowire feature can be demanding more then needed. Since you have to turn it manually, you have to think about many different situation.
+**This bundle turns on autowire for services only when needed - it works for you!**
 
 ```yaml
 # app/config/config.yml
@@ -16,12 +16,13 @@ services:
         # ? autowired: true 
 ```
 
+Turning on autowire feature can be demanding. You have to turn it manually and think about many different situations.
+
 - Sometimes you have argument that needs to be autowired.
 - Sometimes you remove them and autowiring is needed no more.
 - Sometimes you create new dependency and the service now needs to be autowired.
 
 No need to think if you need to add autowire or not - this can be easily automated.
-**This bundle turns on autowire for services only when needed - it works for you!**
 
 
 ## Install
