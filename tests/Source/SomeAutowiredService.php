@@ -1,7 +1,5 @@
 <?php
 
-declare (strict_types = 1);
-
 namespace Symplify\DefaultAutowire\Tests\Source;
 
 class SomeAutowiredService
@@ -16,7 +14,10 @@ class SomeAutowiredService
         $this->someService = $someService;
     }
 
-    public function getSomeService() : SomeService
+    /**
+     * @return SomeService
+     */
+    public function getSomeService()
     {
         return $this->someService;
     }

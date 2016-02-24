@@ -1,7 +1,5 @@
 <?php
 
-declare (strict_types = 1);
-
 /*
  * This file is part of Symplify
  * Copyright (c) 2016 Tomas Votruba (http://tomasvotruba.cz).
@@ -28,7 +26,10 @@ final class TurnOnAutowireCompilerPass implements CompilerPassInterface
         }
     }
 
-    private function shouldDefinitionBeAutowired(Definition $definition) : bool
+    /**
+     * @return bool
+     */
+    private function shouldDefinitionBeAutowired(Definition $definition)
     {
         if (!$this->isDefinitionValid($definition)) {
             return false;
@@ -51,7 +52,10 @@ final class TurnOnAutowireCompilerPass implements CompilerPassInterface
         return true;
     }
 
-    private function isDefinitionValid(Definition $definition) : bool
+    /**
+     * @return bool
+     */
+    private function isDefinitionValid(Definition $definition)
     {
         if (null === $definition->getClass()) {
             return false;
