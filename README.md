@@ -22,7 +22,7 @@ Turning on autowire feature can be demanding. You have to turn it manually and t
 - Sometimes you remove them and autowiring is needed no more.
 - Sometimes you create new dependency and the service now needs to be autowired.
 
-No need to think if you need to add autowire or not - this can be easily automated.
+No need to think if you need to add autowire or not - **this can be easily automated**.
 
 
 ## Install
@@ -45,6 +45,8 @@ class AppKernel extends Kernel
     }
 }
 ```
+
+And that's it!
 
 
 # Testing
