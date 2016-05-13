@@ -40,12 +40,7 @@ final class TurnOnAutowireCompilerPass implements CompilerPassInterface
             return false;
         }
 
-        $constructorMethodReflection = $classReflection->getConstructor();
-
-        $argumentsCount = count($definition->getArguments());
-        $requiredArgumentsCount = $constructorMethodReflection->getNumberOfRequiredParameters();
-
-        if ($argumentsCount === $requiredArgumentsCount) {
+        if ($this->areAllConstructorArgumentsRequired($definition, $classReflection)) {
             return false;
         }
 
@@ -70,5 +65,22 @@ final class TurnOnAutowireCompilerPass implements CompilerPassInterface
         }
 
         return true;
+    }
+
+    /**
+     * @return bool
+     */
+    private function areAllConstructorArgumentsRequired(Definition $definition, ReflectionClass $classReflection)
+    {
+        $constructorMethodReflection = $classReflection->getConstructor();
+
+        $constructorArgumentsCount = count($definition->getArguments());
+        $constructorRequiredArgumentsCount = $constructorMethodReflection->getNumberOfRequiredParameters();
+
+        if ($constructorArgumentsCount === $constructorRequiredArgumentsCount) {
+            return true;
+        }
+
+        return false;
     }
 }
