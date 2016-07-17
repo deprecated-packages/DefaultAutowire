@@ -6,24 +6,40 @@
 [![Downloads](https://img.shields.io/packagist/dt/symplify/default-autowire.svg?style=flat-square)](https://packagist.org/packages/symplify/default-autowire)
 [![Latest stable](https://img.shields.io/packagist/v/symplify/default-autowire.svg?style=flat-square)](https://packagist.org/packages/symplify/default-autowire)
 
-**This bundle turns on autowire for services only when needed - it works for you!**
+**This bundle turns on autowire for you!**
+
+It turn this:
 
 ```yaml
 # app/config/config.yml
 services:
-    some_service:
-        class: SomeClass
-        # ? autowired: true 
+    price_calculator:
+        class: PriceCalculator
+        autowired: true
+
+    product_repository:
+        class: ProductRepository
+        autowired: true
+
+    user_factory:
+        class: UserFactory
+        autowired: true
 ```
 
-Turning on autowire feature can be demanding. You have to turn it manually and think about many different situations.
+Into this:
 
-- Sometimes you have argument that needs to be autowired.
-- Sometimes you remove them and autowiring is needed no more.
-- Sometimes you create new dependency and the service now needs to be autowired.
+```yaml
+# app/config/config.yml
+services:
+    price_calculator:
+        class: PriceCalculator
 
-No need to think if you need to add autowire or not - **this can be easily automated**.
+    product_repository:
+        class: ProductRepository
 
+    user_factory:
+        class: UserFactory
+```
 
 ## Install
 
