@@ -15,4 +15,12 @@ final class SomeRepository
     {
         $this->entityManager = $entityManager;
     }
+
+    /**
+     * @return EntityManagerInterface
+     */
+    public function getEntityManager()
+    {
+        return $this->entityManager;
+    }
 }

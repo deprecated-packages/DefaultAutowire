@@ -6,6 +6,7 @@ use PHPUnit\Framework\TestCase;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Definition;
 use Symplify\DefaultAutowire\DependencyInjection\Compiler\TurnOnAutowireCompilerPass;
+use Symplify\DefaultAutowire\Tests\Resources\Repository\SomeRepository;
 use Symplify\DefaultAutowire\Tests\Source\SomeAutowiredService;
 
 final class TurnOnAutowireCompilerPassTest extends TestCase

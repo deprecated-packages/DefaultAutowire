@@ -12,6 +12,12 @@ services:
     some_repository:
         class: Symplify\DefaultAutowire\Tests\Resources\Repository\SomeRepository
 
+    event_dispatcher:
+        class: Symfony\Component\EventDispatcher\EventDispatcher
+
+    traceable_event_disptacher:
+        class: Symfony\Component\EventDispatcher\Debug\TraceableEventDispatcher
+
 doctrine:
     orm:
     dbal:

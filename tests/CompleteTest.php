@@ -2,31 +2,44 @@
 
 namespace Symplify\DefaultAutowire\Tests;
 
+use Doctrine\ORM\EntityManagerInterface;
 use PHPUnit_Framework_TestCase;
+use Symfony\Component\DependencyInjection\Container;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Symplify\DefaultAutowire\Tests\Resources\Repository\SomeRepository;
 use Symplify\DefaultAutowire\Tests\Source\SomeAutowiredService;
 use Symplify\DefaultAutowire\Tests\Source\SomeService;
 
 final class CompleteTest extends PHPUnit_Framework_TestCase
 {
     /**
-     * @var SomeAutowiredService
+     * @var Container
      */
-    private $someAutowiredService;
+    private $container;
 
     protected function setUp()
     {
         $kernel = new AppKernel('test_env', true);
         $kernel->boot();
 
-        $this->someAutowiredService = $kernel->getContainer()
-            ->get('some_autowired_service');
+        $this->container = $kernel->getContainer();
     }
 
-    public function testIsAutowired()
+    public function testSomeServiceAutowire()
     {
-        $this->assertInstanceOf(
-            SomeService::class,
-            $this->someAutowiredService->getSomeService()
-        );
+        /** @var SomeAutowiredService $someAutowiredService */
+        $someAutowiredService = $this->container->get('some_autowired_service');
+
+        $this->assertInstanceOf(SomeAutowiredService::class, $someAutowiredService);
+        $this->assertInstanceOf(SomeService::class, $someAutowiredService->getSomeService());
+        $this->assertInstanceOf(EventDispatcherInterface::class, $someAutowiredService->getEventDispatcher());
+    }
+
+    public function testRepositoryAutowire()
+    {
+        /** @var SomeRepository $someRepository */
+        $someRepository = $this->container->get('some_repository');
+        $this->assertInstanceOf(SomeRepository::class, $someRepository);
+        $this->assertInstanceOf(EntityManagerInterface::class, $someRepository->getEntityManager());
     }
 }
