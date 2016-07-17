@@ -19,7 +19,7 @@ final class DefaultAutowireTypesCompilerPass implements CompilerPassInterface
     public function process(ContainerBuilder $containerBuilder)
     {
         $autowireTypes = $this->getAutowireTypes($containerBuilder);
-        foreach ($autowireTypes as $serviceName => $type) {
+        foreach ($autowireTypes as $type => $serviceName) {
             if (!$containerBuilder->has($serviceName)) {
                 continue;
             }
