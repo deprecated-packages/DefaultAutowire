@@ -9,7 +9,6 @@ namespace Symplify\DefaultAutowire\Config\Definition;
 
 use Symfony\Component\Config\Definition\Processor;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
-use Symplify\DefaultAutowire\Config\Definition\Configuration;
 use Symplify\DefaultAutowire\SymplifyDefaultAutowireBundle;
 
 final class ConfigurationResolver

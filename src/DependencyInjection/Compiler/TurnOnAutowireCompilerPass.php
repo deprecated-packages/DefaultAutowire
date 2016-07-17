@@ -30,6 +30,7 @@ final class TurnOnAutowireCompilerPass implements CompilerPassInterface
     /**
      * @param string $name
      * @param Definition $definition
+     *
      * @return bool
      */
     private function shouldDefinitionBeAutowired($name, Definition $definition)
@@ -50,7 +51,6 @@ final class TurnOnAutowireCompilerPass implements CompilerPassInterface
         if ($this->areAllConstructorArgumentsRequired($definition, $classReflection)) {
             return false;
         }
-
 
         $constructorReflection = $classReflection->getConstructor();
         if (!$this->haveMissingArgumentsTypehints($definition, $constructorReflection)) {
@@ -126,10 +126,10 @@ final class TurnOnAutowireCompilerPass implements CompilerPassInterface
 
         $i = 0;
         foreach ($constructorReflection->getParameters() as $parameterReflection) {
-            if ($arguments[$i] === "" && $parameterReflection->getType() !== NULL) {
+            if ($arguments[$i] === '' && $parameterReflection->getType() !== null) {
                 return true;
             }
-            $i++;
+            ++$i;
         }
 
         return false;

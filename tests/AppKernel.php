@@ -16,7 +16,7 @@ final class AppKernel extends Kernel
     {
         return [
             new SymplifyDefaultAutowireBundle(),
-            new DoctrineBundle()
+            new DoctrineBundle(),
         ];
     }
 
