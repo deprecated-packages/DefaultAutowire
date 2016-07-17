@@ -9,15 +9,22 @@ namespace Symplify\DefaultAutowire;
 
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
+use Symplify\DefaultAutowire\DependencyInjection\Compiler\DefaultAutowireTypesCompilerPass;
 use Symplify\DefaultAutowire\DependencyInjection\Compiler\TurnOnAutowireCompilerPass;
 
 final class SymplifyDefaultAutowireBundle extends Bundle
 {
     /**
+     * @var string
+     */
+    const ALIAS = 'symplify_default_autowire';
+
+    /**
      * {@inheritdoc}
      */
     public function build(ContainerBuilder $containerBuilder)
     {
+        $containerBuilder->addCompilerPass(new DefaultAutowireTypesCompilerPass());
         $containerBuilder->addCompilerPass(new TurnOnAutowireCompilerPass());
     }
 }

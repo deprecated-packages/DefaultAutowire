@@ -5,5 +5,14 @@ parameters:
 services:
     some_service:
         class: Symplify\DefaultAutowire\Tests\Source\SomeService
+
     some_autowired_service:
         class: Symplify\DefaultAutowire\Tests\Source\SomeAutowiredService
+
+    some_repository:
+        class: Symplify\DefaultAutowire\Tests\Resources\Repository\SomeRepository
+
+doctrine:
+    orm:
+    dbal:
+        memory: true
