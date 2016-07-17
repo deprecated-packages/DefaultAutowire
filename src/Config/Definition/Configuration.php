@@ -36,6 +36,12 @@ final class Configuration implements ConfigurationInterface
 
         $rootNode->children()
             ->arrayNode('autowire_types')
+                ->beforeNormalization()
+                    ->ifArray()
+                    ->then(function ($value) {
+                        return array_merge($this->defaultAutowireTypes, $value);
+                    })
+                ->end()
                 ->defaultValue($this->defaultAutowireTypes)
                 ->prototype('scalar')
             ->end();

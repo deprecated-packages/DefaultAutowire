@@ -41,7 +41,7 @@ services:
         class: UserFactory
 ```
 
-## Install
+# Install
 
 ```bash
 $ composer require symplify/default-autowire
@@ -63,6 +63,15 @@ class AppKernel extends Kernel
 ```
 
 And that's it!
+
+
+# Features
+
+# Multiple service of one type? Set preferred one
+
+```yaml
+
+
 
 
 # Testing

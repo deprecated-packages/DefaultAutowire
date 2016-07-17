@@ -23,13 +23,16 @@ final class ConfigurationResolver
      */
     public function resolveFromContainerBuilder(ContainerBuilder $containerBuilder)
     {
-        if (!$this->resolvedConfiguration) {
-            $processor = new Processor();
-            $configs = $containerBuilder->getExtensionConfig(SymplifyDefaultAutowireBundle::ALIAS);
-            $configs = $processor->processConfiguration(new Configuration(), $configs);
-
-            $this->resolvedConfiguration = $containerBuilder->getParameterBag()->resolveValue($configs);
+        if ($this->resolvedConfiguration) {
+            return $this->resolvedConfiguration;
         }
+
+        $processor = new Processor();
+        $configs = $containerBuilder->getExtensionConfig(SymplifyDefaultAutowireBundle::ALIAS);
+        $configs = $processor->processConfiguration(new Configuration(), $configs);
+
+        $this->resolvedConfiguration = $containerBuilder->getParameterBag()
+            ->resolveValue($configs);
 
         return $this->resolvedConfiguration;
     }
