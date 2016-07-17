@@ -5,6 +5,8 @@ namespace Symplify\DefaultAutowire\Tests;
 use Doctrine\ORM\EntityManagerInterface;
 use PHPUnit_Framework_TestCase;
 use Symfony\Component\DependencyInjection\Container;
+use Symfony\Component\EventDispatcher\Debug\TraceableEventDispatcher;
+use Symfony\Component\EventDispatcher\EventDispatcher;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symplify\DefaultAutowire\Tests\Resources\Repository\SomeRepository;
 use Symplify\DefaultAutowire\Tests\Source\SomeAutowiredService;
@@ -32,7 +34,10 @@ final class CompleteTest extends PHPUnit_Framework_TestCase
 
         $this->assertInstanceOf(SomeAutowiredService::class, $someAutowiredService);
         $this->assertInstanceOf(SomeService::class, $someAutowiredService->getSomeService());
+
         $this->assertInstanceOf(EventDispatcherInterface::class, $someAutowiredService->getEventDispatcher());
+        $this->assertInstanceOf(EventDispatcher::class, $someAutowiredService->getEventDispatcher());
+        $this->assertNotInstanceOf(TraceableEventDispatcher::class, $someAutowiredService->getEventDispatcher());
     }
 
     public function testRepositoryAutowire()
