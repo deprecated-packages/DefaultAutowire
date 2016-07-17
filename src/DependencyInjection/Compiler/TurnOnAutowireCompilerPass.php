@@ -8,6 +8,7 @@
 namespace Symplify\DefaultAutowire\DependencyInjection\Compiler;
 
 use ReflectionClass;
+use ReflectionMethod;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Definition;
@@ -19,17 +20,19 @@ final class TurnOnAutowireCompilerPass implements CompilerPassInterface
      */
     public function process(ContainerBuilder $containerBuilder)
     {
-        foreach ($containerBuilder->getDefinitions() as $definition) {
-            if ($this->shouldDefinitionBeAutowired($definition)) {
+        foreach ($containerBuilder->getDefinitions() as $name => $definition) {
+            if ($this->shouldDefinitionBeAutowired($name, $definition)) {
                 $definition->setAutowired(true);
             }
         }
     }
 
     /**
+     * @param string $name
+     * @param Definition $definition
      * @return bool
      */
-    private function shouldDefinitionBeAutowired(Definition $definition)
+    private function shouldDefinitionBeAutowired($name, Definition $definition)
     {
         if (!$this->isDefinitionValid($definition)) {
             return false;
@@ -40,7 +43,17 @@ final class TurnOnAutowireCompilerPass implements CompilerPassInterface
             return false;
         }
 
+        if (!$this->hasConstructorArguments($classReflection)) {
+            return false;
+        }
+
         if ($this->areAllConstructorArgumentsRequired($definition, $classReflection)) {
+            return false;
+        }
+
+
+        $constructorReflection = $classReflection->getConstructor();
+        if (!$this->haveMissingArgumentsTypehints($definition, $constructorReflection)) {
             return false;
         }
 
@@ -53,6 +66,10 @@ final class TurnOnAutowireCompilerPass implements CompilerPassInterface
     private function isDefinitionValid(Definition $definition)
     {
         if (null === $definition->getClass()) {
+            return false;
+        }
+
+        if (!$definition->isPublic()) {
             return false;
         }
 
@@ -79,6 +96,40 @@ final class TurnOnAutowireCompilerPass implements CompilerPassInterface
 
         if ($constructorArgumentsCount === $constructorRequiredArgumentsCount) {
             return true;
+        }
+
+        return false;
+    }
+
+    /**
+     * @return bool
+     */
+    private function hasConstructorArguments(ReflectionClass $classReflection)
+    {
+        $constructorMethodReflection = $classReflection->getConstructor();
+        if ($constructorMethodReflection->getNumberOfParameters()) {
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
+     * @return bool
+     */
+    private function haveMissingArgumentsTypehints(Definition $definition, ReflectionMethod $constructorReflection)
+    {
+        $arguments = $definition->getArguments();
+        if (!count($arguments)) {
+            return true;
+        }
+
+        $i = 0;
+        foreach ($constructorReflection->getParameters() as $parameterReflection) {
+            if ($arguments[$i] === "" && $parameterReflection->getType() !== NULL) {
+                return true;
+            }
+            $i++;
         }
 
         return false;
