@@ -15,15 +15,15 @@ It turn this:
 services:
     price_calculator:
         class: PriceCalculator
-        autowired: true
+        autowire: true
 
     product_repository:
         class: ProductRepository
-        autowired: true
+        autowire: true
 
     user_factory:
         class: UserFactory
-        autowired: true
+        autowire: true
 ```
 
 Into this:
