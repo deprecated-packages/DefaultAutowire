@@ -20,20 +20,14 @@ final class TurnOnAutowireCompilerPass implements CompilerPassInterface
      */
     public function process(ContainerBuilder $containerBuilder)
     {
-        foreach ($containerBuilder->getDefinitions() as $name => $definition) {
-            if ($this->shouldDefinitionBeAutowired($name, $definition)) {
+        foreach ($containerBuilder->getDefinitions() as $definition) {
+            if ($this->shouldDefinitionBeAutowired($definition)) {
                 $definition->setAutowired(true);
             }
         }
     }
 
-    /**
-     * @param string $name
-     * @param Definition $definition
-     *
-     * @return bool
-     */
-    private function shouldDefinitionBeAutowired($name, Definition $definition)
+    private function shouldDefinitionBeAutowired(Definition $definition) : bool
     {
         if (!$this->isDefinitionValid($definition)) {
             return false;
@@ -60,10 +54,7 @@ final class TurnOnAutowireCompilerPass implements CompilerPassInterface
         return true;
     }
 
-    /**
-     * @return bool
-     */
-    private function isDefinitionValid(Definition $definition)
+    private function isDefinitionValid(Definition $definition) : bool
     {
         if (null === $definition->getClass()) {
             return false;
@@ -84,10 +75,7 @@ final class TurnOnAutowireCompilerPass implements CompilerPassInterface
         return true;
     }
 
-    /**
-     * @return bool
-     */
-    private function areAllConstructorArgumentsRequired(Definition $definition, ReflectionClass $classReflection)
+    private function areAllConstructorArgumentsRequired(Definition $definition, ReflectionClass $classReflection) : bool
     {
         $constructorMethodReflection = $classReflection->getConstructor();
 
@@ -101,10 +89,7 @@ final class TurnOnAutowireCompilerPass implements CompilerPassInterface
         return false;
     }
 
-    /**
-     * @return bool
-     */
-    private function hasConstructorArguments(ReflectionClass $classReflection)
+    private function hasConstructorArguments(ReflectionClass $classReflection) : bool
     {
         $constructorMethodReflection = $classReflection->getConstructor();
         if ($constructorMethodReflection->getNumberOfParameters()) {
@@ -114,10 +99,7 @@ final class TurnOnAutowireCompilerPass implements CompilerPassInterface
         return false;
     }
 
-    /**
-     * @return bool
-     */
-    private function haveMissingArgumentsTypehints(Definition $definition, ReflectionMethod $constructorReflection)
+    private function haveMissingArgumentsTypehints(Definition $definition, ReflectionMethod $constructorReflection) : bool
     {
         $arguments = $definition->getArguments();
         if (!count($arguments)) {

@@ -36,7 +36,7 @@ final class DefaultAutowireTypesCompilerPass implements CompilerPassInterface
     /**
      * @return string[]
      */
-    private function getAutowireTypes(ContainerBuilder $containerBuilder)
+    private function getAutowireTypes(ContainerBuilder $containerBuilder) : array
     {
         $config = (new ConfigurationResolver())->resolveFromContainerBuilder($containerBuilder);
 

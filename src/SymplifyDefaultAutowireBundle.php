@@ -32,7 +32,7 @@ final class SymplifyDefaultAutowireBundle extends Bundle
     /**
      * {@inheritdoc}
      */
-    public function getContainerExtension()
+    public function getContainerExtension() : SymplifyDefaultAutowireContainerExtension
     {
         return new SymplifyDefaultAutowireContainerExtension();
     }

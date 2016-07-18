@@ -18,10 +18,7 @@ final class ConfigurationResolver
      */
     private $resolvedConfiguration;
 
-    /**
-     * {@inheritdoc}
-     */
-    public function resolveFromContainerBuilder(ContainerBuilder $containerBuilder)
+    public function resolveFromContainerBuilder(ContainerBuilder $containerBuilder) : array
     {
         if ($this->resolvedConfiguration) {
             return $this->resolvedConfiguration;
