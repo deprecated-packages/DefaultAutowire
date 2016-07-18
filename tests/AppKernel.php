@@ -2,6 +2,7 @@
 
 namespace Symplify\DefaultAutowire\Tests;
 
+use Doctrine\Bundle\DoctrineBundle\DoctrineBundle;
 use Symfony\Component\Config\Loader\LoaderInterface;
 use Symfony\Component\HttpKernel\Kernel;
 use Symplify\DefaultAutowire\SymplifyDefaultAutowireBundle;
@@ -15,6 +16,7 @@ final class AppKernel extends Kernel
     {
         return [
             new SymplifyDefaultAutowireBundle(),
+            new DoctrineBundle(),
         ];
     }
 

@@ -2,6 +2,8 @@
 
 namespace Symplify\DefaultAutowire\Tests\Source;
 
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+
 class SomeAutowiredService
 {
     /**
@@ -9,9 +11,15 @@ class SomeAutowiredService
      */
     private $someService;
 
-    public function __construct(SomeService $someService)
+    /**
+     * @var EventDispatcherInterface
+     */
+    private $eventDispatcher;
+
+    public function __construct(SomeService $someService, EventDispatcherInterface $eventDispatcher)
     {
         $this->someService = $someService;
+        $this->eventDispatcher = $eventDispatcher;
     }
 
     /**
@@ -20,5 +28,13 @@ class SomeAutowiredService
     public function getSomeService()
     {
         return $this->someService;
+    }
+
+    /**
+     * @return EventDispatcherInterface
+     */
+    public function getEventDispatcher()
+    {
+        return $this->eventDispatcher;
     }
 }

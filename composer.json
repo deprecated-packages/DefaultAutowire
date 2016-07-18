@@ -11,8 +11,11 @@
     },
     "require-dev": {
         "nette/utils": "^2.3",
-        "phpunit/phpunit": "^5.1",
-        "symplify/coding-standard": "^0.1"
+        "phpunit/phpunit": "^5.4",
+        "symplify/coding-standard": "^0.3",
+        "doctrine/doctrine-bundle": "^1.6",
+        "doctrine/orm": "^2.5",
+        "symfony/form": "^3.1"
     },
     "autoload": {
         "psr-4": {
