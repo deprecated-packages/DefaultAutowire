@@ -99,8 +99,10 @@ final class TurnOnAutowireCompilerPass implements CompilerPassInterface
         return false;
     }
 
-    private function haveMissingArgumentsTypehints(Definition $definition, ReflectionMethod $constructorReflection) : bool
-    {
+    private function haveMissingArgumentsTypehints(
+        Definition $definition,
+        ReflectionMethod $constructorReflection
+    ) : bool {
         $arguments = $definition->getArguments();
         if (!count($arguments)) {
             return true;
