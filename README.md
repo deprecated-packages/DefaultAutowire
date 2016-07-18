@@ -44,7 +44,7 @@ services:
 # Install
 
 ```bash
-$ composer require symplify/default-autowire
+composer require symplify/default-autowire
 ```
 
 Add bundle to `AppKernel.php`:
@@ -91,8 +91,8 @@ symplify_default_autowire:
 # Testing
 
 ```bash
-$ vendor/bin/symplify-cs check src tests
-$ vendor/bin/phpunit
+vendor/bin/symplify-cs check src tests
+vendor/bin/phpunit
 ```
 
 
