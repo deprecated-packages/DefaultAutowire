@@ -18,6 +18,11 @@ services:
     traceable_event_disptacher:
         class: Symfony\Component\EventDispatcher\Debug\TraceableEventDispatcher
 
+    some_service_with_optional_dependencies:
+        class: Symplify\DefaultAutowire\Tests\Source\SomeServiceWithOptionalConstructorArguments
+        arguments:
+            - '@some_service'
+
 doctrine:
     orm:
     dbal:
