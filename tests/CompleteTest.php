@@ -40,11 +40,11 @@ final class CompleteTest extends PHPUnit_Framework_TestCase
         $this->assertNotInstanceOf(TraceableEventDispatcher::class, $someAutowiredService->getEventDispatcher());
     }
 
-//    public function testRepositoryAutowire()
-//    {
-//        /** @var SomeRepository $someRepository */
-//        $someRepository = $this->container->get('some_repository');
-//        $this->assertInstanceOf(SomeRepository::class, $someRepository);
-//        $this->assertInstanceOf(EntityManagerInterface::class, $someRepository->getEntityManager());
-//    }
+    public function testRepositoryAutowire()
+    {
+        /** @var SomeRepository $someRepository */
+        $someRepository = $this->container->get('some_repository');
+        $this->assertInstanceOf(SomeRepository::class, $someRepository);
+        $this->assertInstanceOf(EntityManagerInterface::class, $someRepository->getEntityManager());
+    }
 }
