@@ -2,7 +2,7 @@
 
 namespace Symplify\DefaultAutowire\Tests\Source;
 
-class SomeServiceWithOptionalConstructorArguments
+final class SomeServiceWithOptionalConstructorArguments
 {
     /**
      * @var SomeService
