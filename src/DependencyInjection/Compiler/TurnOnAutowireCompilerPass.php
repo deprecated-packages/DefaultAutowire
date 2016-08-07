@@ -7,11 +7,8 @@
 
 namespace Symplify\DefaultAutowire\DependencyInjection\Compiler;
 
-use ReflectionClass;
-use ReflectionMethod;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
-use Symfony\Component\DependencyInjection\Definition;
 use Symplify\DefaultAutowire\DependencyInjection\Definition\DefinitionAnalyzer;
 
 final class TurnOnAutowireCompilerPass implements CompilerPassInterface
