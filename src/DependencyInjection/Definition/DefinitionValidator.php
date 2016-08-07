@@ -17,11 +17,7 @@ final class DefinitionValidator
             return false;
         }
 
-        if (!$definition->isPublic()) {
-            return false;
-        }
-
-        if ($definition->isAbstract()) {
+        if (!$definition->isPublic() || $definition->isAbstract()) {
             return false;
         }
 
