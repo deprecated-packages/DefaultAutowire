@@ -85,6 +85,11 @@ final class DefinitionAnalyzer
 
         $i = 0;
         foreach ($constructorReflection->getParameters() as $parameterReflection) {
+            if (!isset($arguments[$i])) {
+                ++$i;
+                continue;
+            }
+
             if ($arguments[$i] === '' && !$parameterReflection->getType()->allowsNull()) {
                 return true;
             }
