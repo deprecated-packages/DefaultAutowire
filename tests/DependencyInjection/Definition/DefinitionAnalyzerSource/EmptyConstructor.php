@@ -2,7 +2,7 @@
 
 namespace Symplify\DefaultAutowire\Tests\DependencyInjection\Definition\DefinitionAnalyzerSource;
 
-final class EmptyConstructorClass
+final class EmptyConstructor
 {
     public function __construct()
     {

@@ -30,19 +30,15 @@ final class DefinitionAnalyzer
         }
 
         $classReflection = new ReflectionClass($definition->getClass());
-        if (!$classReflection->hasMethod('__construct')) {
-            return false;
-        }
-
-        if (!$this->hasConstructorArguments($classReflection)) {
-            return false;
-        }
-
-        if ($this->areAllConstructorArgumentsRequired($definition, $classReflection)) {
+        if (!$classReflection->hasMethod('__construct') || !$this->hasConstructorArguments($classReflection)) {
             return false;
         }
 
         $constructorReflection = $classReflection->getConstructor();
+        if ($this->areAllConstructorArgumentsRequired($definition, $constructorReflection)) {
+            return false;
+        }
+
         if (!$this->haveMissingArgumentsTypehints($definition, $constructorReflection)) {
             return false;
         }
@@ -50,24 +46,24 @@ final class DefinitionAnalyzer
         return true;
     }
 
-    private function areAllConstructorArgumentsRequired(Definition $definition, ReflectionClass $classReflection) : bool
+    private function hasConstructorArguments(ReflectionClass $classReflection) : bool
     {
         $constructorMethodReflection = $classReflection->getConstructor();
-
-        $constructorArgumentsCount = count($definition->getArguments());
-        $constructorRequiredArgumentsCount = $constructorMethodReflection->getNumberOfRequiredParameters();
-
-        if ($constructorArgumentsCount === $constructorRequiredArgumentsCount) {
+        if ($constructorMethodReflection->getNumberOfParameters()) {
             return true;
         }
 
         return false;
     }
 
-    private function hasConstructorArguments(ReflectionClass $classReflection) : bool
-    {
-        $constructorMethodReflection = $classReflection->getConstructor();
-        if ($constructorMethodReflection->getNumberOfParameters()) {
+    private function areAllConstructorArgumentsRequired(
+        Definition $definition,
+        ReflectionMethod $constructorReflection
+    ) : bool {
+        $constructorArgumentsCount = count($definition->getArguments());
+        $constructorRequiredArgumentsCount = $constructorReflection->getNumberOfRequiredParameters();
+
+        if ($constructorArgumentsCount === $constructorRequiredArgumentsCount) {
             return true;
         }
 

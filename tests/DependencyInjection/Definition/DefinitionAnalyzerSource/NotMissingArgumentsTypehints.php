@@ -4,9 +4,9 @@ namespace Symplify\DefaultAutowire\Tests\DependencyInjection\Definition\Definiti
 
 use Symplify\DefaultAutowire\Tests\Source\SomeService;
 
-final class MissingArgumentsTypehintsClass
+final class NotMissingArgumentsTypehints
 {
-    public function __construct(SomeService $someService = null, $value = 1, $valueWithoutType)
+    public function __construct(SomeService $someService, SomeService $anotherService)
     {
     }
 }
