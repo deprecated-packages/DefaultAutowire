@@ -22,19 +22,19 @@ final class DefinitionAnalyzerTest extends TestCase
         $this->definitionAnalyzer = new DefinitionAnalyzer(new DefinitionValidator());
     }
 
-//    public function testHasConstructorArguments()
-//    {
-//        $definition = new Definition(EmptyConstructor::class);
-//        $this->assertFalse($this->definitionAnalyzer->shouldDefinitionBeAutowired($definition));
-//    }
-//
-//    public function testHaveMissingArgumentsTypehints()
-//    {
-//        $definition = new Definition(MissingArgumentsTypehints::class);
-//        $definition->setArguments(['@someService']);
-//
-//        $this->assertFalse($this->definitionAnalyzer->shouldDefinitionBeAutowired($definition));
-//    }
+    public function testHasConstructorArguments()
+    {
+        $definition = new Definition(EmptyConstructor::class);
+        $this->assertFalse($this->definitionAnalyzer->shouldDefinitionBeAutowired($definition));
+    }
+
+    public function testHaveMissingArgumentsTypehints()
+    {
+        $definition = new Definition(MissingArgumentsTypehints::class);
+        $definition->setArguments(['@someService']);
+
+        $this->assertFalse($this->definitionAnalyzer->shouldDefinitionBeAutowired($definition));
+    }
 
     public function testHaveNotMissingArgumentsTypehints()
     {
