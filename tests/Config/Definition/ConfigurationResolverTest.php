@@ -73,4 +73,11 @@ final class ConfigurationResolverTest extends TestCase
         $this->assertCount(7, $autowireTypes);
         $this->assertSame('some_service', $autowireTypes['SomeInterface']);
     }
+
+    public function testCache()
+    {
+        $resolvedConfiguration = $this->configurationResolver->resolveFromContainerBuilder(new ContainerBuilder());
+        $resolvedConfiguration2 = $this->configurationResolver->resolveFromContainerBuilder(new ContainerBuilder());
+        $this->assertSame($resolvedConfiguration, $resolvedConfiguration2);
+    }
 }

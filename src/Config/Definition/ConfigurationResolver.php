@@ -28,9 +28,7 @@ final class ConfigurationResolver
         $configs = $containerBuilder->getExtensionConfig(SymplifyDefaultAutowireBundle::ALIAS);
         $configs = $processor->processConfiguration(new Configuration(), $configs);
 
-        $this->resolvedConfiguration = $containerBuilder->getParameterBag()
+        return $this->resolvedConfiguration = $containerBuilder->getParameterBag()
             ->resolveValue($configs);
-
-        return $this->resolvedConfiguration;
     }
 }
