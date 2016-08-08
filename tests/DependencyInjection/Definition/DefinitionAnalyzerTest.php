@@ -9,7 +9,7 @@ use Symplify\DefaultAutowire\DependencyInjection\Definition\DefinitionValidator;
 use Symplify\DefaultAutowire\Tests\DependencyInjection\Definition\DefinitionAnalyzerSource\EmptyConstructorClass;
 use Symplify\DefaultAutowire\Tests\DependencyInjection\Definition\DefinitionAnalyzerSource\MissingArgumentsTypehintsClass;
 
-final class DefinitionValidatorTest extends TestCase
+final class DefinitionAnalyzerTest extends TestCase
 {
     /**
      * @var DefinitionAnalyzer

@@ -8,5 +8,4 @@ final class EmptyConstructorClass
     {
         $value = 1;
     }
-
 }
