@@ -11,6 +11,8 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 use Symplify\DefaultAutowire\DependencyInjection\Compiler\DefaultAutowireTypesCompilerPass;
 use Symplify\DefaultAutowire\DependencyInjection\Compiler\TurnOnAutowireCompilerPass;
+use Symplify\DefaultAutowire\DependencyInjection\Definition\DefinitionAnalyzer;
+use Symplify\DefaultAutowire\DependencyInjection\Definition\DefinitionValidator;
 use Symplify\DefaultAutowire\DependencyInjection\Extension\SymplifyDefaultAutowireContainerExtension;
 
 final class SymplifyDefaultAutowireBundle extends Bundle
@@ -26,7 +28,7 @@ final class SymplifyDefaultAutowireBundle extends Bundle
     public function build(ContainerBuilder $containerBuilder)
     {
         $containerBuilder->addCompilerPass(new DefaultAutowireTypesCompilerPass());
-        $containerBuilder->addCompilerPass(new TurnOnAutowireCompilerPass());
+        $containerBuilder->addCompilerPass(new TurnOnAutowireCompilerPass($this->createDefinitionAnalyzer()));
     }
 
     /**
@@ -35,5 +37,10 @@ final class SymplifyDefaultAutowireBundle extends Bundle
     public function getContainerExtension() : SymplifyDefaultAutowireContainerExtension
     {
         return new SymplifyDefaultAutowireContainerExtension();
+    }
+
+    private function createDefinitionAnalyzer() : DefinitionAnalyzer
+    {
+        return new DefinitionAnalyzer(new DefinitionValidator());
     }
 }
