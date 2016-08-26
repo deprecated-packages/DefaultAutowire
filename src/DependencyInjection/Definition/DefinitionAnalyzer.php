@@ -9,7 +9,9 @@ namespace Symplify\DefaultAutowire\DependencyInjection\Definition;
 
 use ReflectionClass;
 use ReflectionMethod;
+use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Definition;
+use Symfony\Component\DependencyInjection\Reference;
 
 final class DefinitionAnalyzer
 {
@@ -23,26 +25,67 @@ final class DefinitionAnalyzer
         $this->definitionValidator = $definitionValidator;
     }
 
-    public function shouldDefinitionBeAutowired(Definition $definition) : bool
+    public function shouldDefinitionBeAutowired(ContainerBuilder $containerBuilder, Definition $definition) : bool
     {
         if (!$this->definitionValidator->validate($definition)) {
             return false;
         }
 
-        $isFactory = $definition->getFactory() !== NULL;
+        $isFactory = $definition->getFactory() !== null;
 
         if ($isFactory) {
-            return false;
-
+            return $this->shouldFactoryBuiltDefinitionBeAutowired($containerBuilder, $definition);
         } else {
             return $this->shouldClassDefinitionBeAutowired($definition);
         }
     }
 
+    /**
+     * @param ContainerBuilder $containerBuilder
+     * @param Definition $definition
+     *
+     * @return bool
+     */
+    private function shouldFactoryBuiltDefinitionBeAutowired(
+        ContainerBuilder $containerBuilder,
+        Definition $definition
+    ) : bool {
+        $factory = $definition->getFactory();
+
+        // functions specified as string are not supported
+        if (is_string($factory)) {
+            return false;
+        }
+
+        list($class, $method) = $factory;
+        if ($class instanceof Reference) {
+            $factoryClassDefinition = $containerBuilder->getDefinition($class);
+            $class = $factoryClassDefinition->getClass();
+        }
+
+        $factoryMethodReflection = new ReflectionMethod($class, $method);
+
+        if (!$this->hasMethodArguments($factoryMethodReflection)) {
+            return false;
+        }
+
+        if ($this->areAllMethodArgumentsRequired($definition, $factoryMethodReflection)) {
+            return false;
+        }
+
+        if (!$this->haveMissingArgumentsTypehints($definition, $factoryMethodReflection)) {
+            return false;
+        }
+
+        return true;
+    }
+
     private function shouldClassDefinitionBeAutowired(Definition $definition) : bool
     {
         $classReflection = new ReflectionClass($definition->getClass());
-        if (!$classReflection->hasMethod('__construct') || !$this->hasConstructorArguments($classReflection)) {
+        if (!$classReflection->hasMethod('__construct')
+            || !$this->hasMethodArguments($classReflection->getConstructor())
+        ) {
             return false;
         }
 
@@ -58,14 +101,9 @@ final class DefinitionAnalyzer
         return true;
     }
 
-    private function hasConstructorArguments(ReflectionClass $classReflection) : bool
+    private function hasMethodArguments(ReflectionMethod $methodReflection) : bool
     {
-        $constructorMethodReflection = $classReflection->getConstructor();
-        if ($constructorMethodReflection->getNumberOfParameters()) {
-            return true;
-        }
-
-        return false;
+        return $methodReflection->getNumberOfParameters() !== 0;
     }
 
     private function areAllMethodArgumentsRequired(

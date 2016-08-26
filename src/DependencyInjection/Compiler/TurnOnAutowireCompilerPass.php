@@ -29,7 +29,7 @@ final class TurnOnAutowireCompilerPass implements CompilerPassInterface
     public function process(ContainerBuilder $containerBuilder)
     {
         foreach ($containerBuilder->getDefinitions() as $definition) {
-            if ($this->definitionAnalyzer->shouldDefinitionBeAutowired($definition)) {
+            if ($this->definitionAnalyzer->shouldDefinitionBeAutowired($containerBuilder, $definition)) {
                 $definition->setAutowired(true);
             }
         }
