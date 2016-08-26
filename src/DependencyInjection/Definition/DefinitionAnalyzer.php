@@ -35,7 +35,7 @@ final class DefinitionAnalyzer
         }
 
         $constructorReflection = $classReflection->getConstructor();
-        if ($this->areAllConstructorArgumentsRequired($definition, $constructorReflection)) {
+        if ($this->areAllMethodArgumentsRequired($definition, $constructorReflection)) {
             return false;
         }
 
@@ -56,7 +56,7 @@ final class DefinitionAnalyzer
         return false;
     }
 
-    private function areAllConstructorArgumentsRequired(
+    private function areAllMethodArgumentsRequired(
         Definition $definition,
         ReflectionMethod $constructorReflection
     ) : bool {
