@@ -29,6 +29,18 @@ final class DefinitionAnalyzer
             return false;
         }
 
+        $isFactory = $definition->getFactory() !== NULL;
+
+        if ($isFactory) {
+            return false;
+
+        } else {
+            return $this->shouldClassDefinitionBeAutowired($definition);
+        }
+    }
+
+    private function shouldClassDefinitionBeAutowired(Definition $definition) : bool
+    {
         $classReflection = new ReflectionClass($definition->getClass());
         if (!$classReflection->hasMethod('__construct') || !$this->hasConstructorArguments($classReflection)) {
             return false;
